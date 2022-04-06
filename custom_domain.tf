@@ -1,5 +1,5 @@
 variable "hosted_zone_id" {
-  type      = string
+  type = string
 }
 
 data "aws_route53_zone" "domain" {
@@ -15,7 +15,7 @@ resource "aws_acm_certificate" "certificate" {
   domain_name       = data.aws_route53_zone.domain.name
   validation_method = "DNS"
 
-	provider = aws.us_east
+  provider = aws.us_east
 }
 
 resource "aws_route53_record" "validation" {
@@ -26,18 +26,18 @@ resource "aws_route53_record" "validation" {
       type   = dvo.resource_record_type
     }
   }
-  name            = each.value.name
-  records         = [each.value.record]
-  ttl             = 60
-  type            = each.value.type
-  zone_id         = data.aws_route53_zone.domain.zone_id
+  name    = each.value.name
+  records = [each.value.record]
+  ttl     = 60
+  type    = each.value.type
+  zone_id = data.aws_route53_zone.domain.zone_id
 }
 
 resource "aws_acm_certificate_validation" "validated_cert" {
-  certificate_arn = aws_acm_certificate.certificate.arn
-	validation_record_fqdns = [for record in aws_route53_record.validation : record.fqdn]
+  certificate_arn         = aws_acm_certificate.certificate.arn
+  validation_record_fqdns = [for record in aws_route53_record.validation : record.fqdn]
 
-	provider = aws.us_east
+  provider = aws.us_east
 }
 
 resource "aws_appsync_domain_name" "domain" {
@@ -56,8 +56,8 @@ resource "aws_route53_record" "a" {
   type    = "A"
 
   alias {
-    name = aws_appsync_domain_name.domain.appsync_domain_name
-    zone_id = aws_appsync_domain_name.domain.hosted_zone_id
+    name                   = aws_appsync_domain_name.domain.appsync_domain_name
+    zone_id                = aws_appsync_domain_name.domain.hosted_zone_id
     evaluate_target_health = true
   }
 }
@@ -68,8 +68,8 @@ resource "aws_route53_record" "aaaa" {
   type    = "AAAA"
 
   alias {
-    name = aws_appsync_domain_name.domain.appsync_domain_name
-    zone_id = aws_appsync_domain_name.domain.hosted_zone_id
+    name                   = aws_appsync_domain_name.domain.appsync_domain_name
+    zone_id                = aws_appsync_domain_name.domain.hosted_zone_id
     evaluate_target_health = true
   }
 }

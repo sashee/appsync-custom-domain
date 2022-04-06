@@ -68,19 +68,19 @@ resource "aws_cloudwatch_log_group" "loggroup" {
 }
 
 resource "aws_appsync_datasource" "ds" {
-  api_id           = aws_appsync_graphql_api.appsync.id
-  name             = "ds"
-  type             = "NONE"
+  api_id = aws_appsync_graphql_api.appsync.id
+  name   = "ds"
+  type   = "NONE"
 }
 
 # resolvers
 
 resource "aws_appsync_resolver" "Query_test" {
-  api_id      = aws_appsync_graphql_api.appsync.id
-	type        = "Query"
-	field       = "test"
-  data_source = aws_appsync_datasource.ds.name
-  request_template = <<EOF
+  api_id            = aws_appsync_graphql_api.appsync.id
+  type              = "Query"
+  field             = "test"
+  data_source       = aws_appsync_datasource.ds.name
+  request_template  = <<EOF
 {
 	"version" : "2018-05-29",
 	"payload": {
@@ -94,11 +94,11 @@ EOF
 }
 
 resource "aws_appsync_resolver" "Mutation_test" {
-  api_id      = aws_appsync_graphql_api.appsync.id
-	type        = "Mutation"
-	field       = "test"
-  data_source = aws_appsync_datasource.ds.name
-  request_template = <<EOF
+  api_id            = aws_appsync_graphql_api.appsync.id
+  type              = "Mutation"
+  field             = "test"
+  data_source       = aws_appsync_datasource.ds.name
+  request_template  = <<EOF
 {
 	"version" : "2018-05-29",
 	"payload": {
@@ -112,7 +112,7 @@ EOF
 }
 
 resource "aws_appsync_api_key" "key" {
-  api_id  = aws_appsync_graphql_api.appsync.id
+  api_id = aws_appsync_graphql_api.appsync.id
 }
 
 output "query" {

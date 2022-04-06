@@ -1,0 +1,18 @@
+type Query {
+	test: String
+}
+
+type Mutation {
+	test: String
+}
+
+type Subscription {
+	test: String
+	@aws_subscribe(mutations: ["test"])
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+	subscription: Subscription
+}
